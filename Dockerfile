@@ -34,6 +34,7 @@ RUN chmod +x /root/scripts/* && rm -f /var/www/html/index.html
 RUN a2enmod remoteip && a2enconf remoteip && a2enmod php5 && a2enmod rewrite && php5enmod mcrypt
 
 ADD http://www.1c-bitrix.ru/download/scripts/bitrixsetup.php /var/www/html
+ADD http://www.1c-bitrix.ru/download/scripts/restore.php /var/www/html/
 RUN chown -R www-data:www-data /var/www/html && chown -R www-data:www-data /var/lib/php5
 
 EXPOSE 80
