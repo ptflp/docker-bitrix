@@ -28,7 +28,9 @@ ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_DIR=/var/run/apache2 \
     APACHE_PID_FILE=/var/run/apache2.pid 
 
-COPY ./scripts/* /root/scripts/
+COPY ./scripts/boot.sh /root/scripts/boot.sh
+COPY ./scripts/bx_cron /etc/cron.d/bx_cron
+RUN chmod 0644 /etc/cron.d/bx_cron
 COPY ./conf/conf-available/* /etc/apache2/conf-available/
 COPY ./conf/mods-available/* /etc/apache2/mods-available/
 RUN chmod +x /root/scripts/* && rm -f /var/www/html/index.html
