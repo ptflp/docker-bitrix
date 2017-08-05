@@ -4,7 +4,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   apache2 libapache2-mod-php5 php5-mysql php5-gd php5-mcrypt php-pear php-apc php5-curl curl lynx-cur
 
 RUN \
- sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/cli/php.ini && \
  sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/apache2/php.ini && \
  sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php5/apache2/php.ini && \
  sed -i "s/display_errors = Off/display_errors = On/" /etc/php5/apache2/php.ini && \
@@ -18,7 +17,8 @@ RUN \
  sed -i "s/;pcre.recursion_limit=100000/pcre.recursion_limit=100000/" /etc/php5/apache2/php.ini && \
  sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 40M/" /etc/php5/apache2/php.ini && \
  sed -i "s/post_max_size = 8M/post_max_size = 40M/" /etc/php5/apache2/php.ini && \
- sed -i "s/memory_limit = 128M/memory_limit = 256M/" /etc/php5/apache2/php.ini
+ sed -i "s/memory_limit = 128M/memory_limit = 256M/" /etc/php5/apache2/php.ini && \
+ cp /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 
 
 ENV APACHE_RUN_USER=www-data \
