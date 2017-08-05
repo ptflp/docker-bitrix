@@ -16,7 +16,8 @@ RUN \
  sed -i "s/; max_input_vars = 1000/max_input_vars = 10000/" /etc/php5/apache2/php.ini && \
  sed -i "s/;pcre.recursion_limit=100000/pcre.recursion_limit=100000/" /etc/php5/apache2/php.ini && \
  sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 40M/" /etc/php5/apache2/php.ini && \
- sed -i "s/post_max_size = 8M/post_max_size = 40M/" /etc/php5/apache2/php.ini
+ sed -i "s/post_max_size = 8M/post_max_size = 40M/" /etc/php5/apache2/php.ini && \
+ sed -i "s/memory_limit = 128M/memory_limit = 256M/" /etc/php5/apache2/php.ini
 
 
 ENV APACHE_RUN_USER=www-data \
