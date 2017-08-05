@@ -4,6 +4,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
   apache2 libapache2-mod-php5 php5-mysql php5-gd php5-mcrypt php-pear php-apc php5-curl curl lynx-cur
 
 RUN \
+ sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/cli/php.ini && \
  sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/apache2/php.ini && \
  sed -i "s/error_reporting = .*$/error_reporting = E_ERROR | E_WARNING | E_PARSE/" /etc/php5/apache2/php.ini && \
  sed -i "s/display_errors = Off/display_errors = On/" /etc/php5/apache2/php.ini && \
