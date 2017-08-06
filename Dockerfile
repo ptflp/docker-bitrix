@@ -18,7 +18,7 @@ RUN \
  sed -i "s/upload_max_filesize = 2M/upload_max_filesize = 40M/" /etc/php5/apache2/php.ini && \
  sed -i "s/post_max_size = 8M/post_max_size = 40M/" /etc/php5/apache2/php.ini && \
  sed -i "s/memory_limit = 128M/memory_limit = 256M/" /etc/php5/apache2/php.ini && \
- sed -i "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=100000" && \
+ sed -i "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=100000/" /etc/php5/apache2/php.ini && \
  cp /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 
 
