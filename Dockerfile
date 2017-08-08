@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 RUN apt-get update && apt-get -y upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-  apache2 libapache2-mod-php5 php5-mysql php5-gd php5-mcrypt php-pear php-apc php5-curl curl lynx-cur
+  apache2 libapache2-mod-php5 php5-mysql php5-gd php5-mcrypt php-pear php-apc php5-curl curl lynx-cur msmtp
 
 RUN \
  sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php5/apache2/php.ini && \
@@ -19,6 +19,7 @@ RUN \
  sed -i "s/post_max_size = 8M/post_max_size = 40M/" /etc/php5/apache2/php.ini && \
  sed -i "s/memory_limit = 128M/memory_limit = 256M/" /etc/php5/apache2/php.ini && \
  sed -i "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=100000/" /etc/php5/apache2/php.ini && \
+ sed -i "s/;sendmail_path =/sendmail_path = msmtp -t -i/" /etc/php5/apache2/php.ini && \
  cp /etc/php5/apache2/php.ini /etc/php5/cli/php.ini
 
 
@@ -31,10 +32,10 @@ ENV APACHE_RUN_USER=www-data \
 
 COPY ./scripts/boot.sh /root/scripts/boot.sh
 COPY ./scripts/bx_cron /etc/cron.d/bx_cron
-RUN chmod 0644 /etc/cron.d/bx_cron
+RUN chmod +x /root/scripts/* && rm -f /var/www/html/index.html && chmod 0644 /etc/cron.d/bx_cron
+
 COPY ./conf/conf-available/* /etc/apache2/conf-available/
 COPY ./conf/mods-available/* /etc/apache2/mods-available/
-RUN chmod +x /root/scripts/* && rm -f /var/www/html/index.html
 
 RUN a2enmod remoteip && a2enconf remoteip && a2enmod php5 && a2enmod rewrite && php5enmod mcrypt
 
