@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get -y upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-  apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-gd php7.0-mcrypt php-pear php7.0-curl php7.0-opcache curl lynx-cur msmtp rsyslog php7.0-mbstring
+  apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-gd php7.0-mcrypt php-pear php7.0-curl php7.0-opcache curl zip unzip lynx-cur msmtp rsyslog php7.0-mbstring
 
 RUN \
  sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/7.0/apache2/php.ini && \
