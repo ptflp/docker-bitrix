@@ -20,7 +20,11 @@ RUN \
  sed -i "s/memory_limit = 128M/memory_limit = 256M/" /etc/php/7.0/apache2/php.ini && \
  sed -i "s/;opcache.max_accelerated_files=2000/opcache.max_accelerated_files=100000/" /etc/php/7.0/apache2/php.ini && \
  sed -i "s/;sendmail_path =/sendmail_path = msmtp -t -i/" /etc/php/7.0/apache2/php.ini && \
- cp /etc/php/7.0/apache2/php.ini /etc/php/7.0/cli/php.ini
+ cp /etc/php/7.0/apache2/php.ini /etc/php/7.0/cli/php.ini && \
+ curl -sS https://getcomposer.org/installer | php && \
+ mv composer.phar /usr/local/bin/composer &&\
+ composer global require "fxp/composer-asset-plugin:~1.4.2" &&\
+ composer global require hirak/prestissimo
 
 ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_GROUP=www-data \
