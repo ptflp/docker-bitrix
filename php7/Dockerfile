@@ -26,7 +26,8 @@ RUN \
  composer global require "fxp/composer-asset-plugin:~1.4.2" &&\
  composer global require hirak/prestissimo &&\
  git config --global user.email "no@no.no" &&\
- git config --global user.name "user"
+ git config --global user.name "user" &&\
+ git config --global push.default simple
 
 
 ENV APACHE_RUN_USER=www-data \
