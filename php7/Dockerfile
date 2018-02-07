@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get -y upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-  apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-gd php7.0-mcrypt php-pear php7.0-curl php7.0-opcache curl zip unzip lynx-cur msmtp rsyslog php7.0-mbstring
+  apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-gd php7.0-mcrypt php-pear php7.0-curl php7.0-opcache curl zip unzip git lynx-cur msmtp rsyslog php7.0-mbstring
 
 RUN \
  sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/7.0/apache2/php.ini && \
@@ -24,7 +24,10 @@ RUN \
  curl -sS https://getcomposer.org/installer | php && \
  mv composer.phar /usr/local/bin/composer &&\
  composer global require "fxp/composer-asset-plugin:~1.4.2" &&\
- composer global require hirak/prestissimo
+ composer global require hirak/prestissimo &&\
+ git config --global user.email "no@no.no" &&\
+ git config --global user.name "user"
+
 
 ENV APACHE_RUN_USER=www-data \
     APACHE_RUN_GROUP=www-data \
@@ -44,6 +47,6 @@ RUN a2enmod remoteip && a2enconf remoteip && a2enmod php7.0 && a2enmod rewrite
 ADD http://www.1c-bitrix.ru/download/scripts/bitrixsetup.php /var/www/html
 ADD http://www.1c-bitrix.ru/download/scripts/restore.php /var/www/html/
 RUN chown -R www-data:www-data /var/www/html && chown -R www-data:www-data /var/lib/php
-
+WORKDIR /var/www/
 EXPOSE 80
 CMD ["/root/scripts/boot.sh"]
