@@ -1,7 +1,7 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get -y upgrade
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \
-  apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-gd php7.0-mcrypt php-pear php7.0-curl php7.0-opcache curl zip unzip git lynx-cur msmtp rsyslog php7.0-mbstring
+  apache2 libapache2-mod-php7.0 php7.0-mysql php7.0-gd php7.0-mcrypt php-xdebug php-pear php7.0-curl php7.0-opcache curl zip unzip git lynx-cur msmtp rsyslog php7.0-mbstring
 
 RUN \
  sed -i "s/short_open_tag = Off/short_open_tag = On/" /etc/php/7.0/apache2/php.ini && \
@@ -27,7 +27,8 @@ RUN \
  composer global require hirak/prestissimo &&\
  git config --global user.email "no@no.no" &&\
  git config --global user.name "user" &&\
- git config --global push.default simple
+ git config --global push.default simple &&\
+ echo 'xdebug.show_error_trace = 1' >> /etc/php/7.0/mods-available/xdebug.ini
 
 
 ENV APACHE_RUN_USER=www-data \
@@ -50,4 +51,5 @@ ADD http://www.1c-bitrix.ru/download/scripts/restore.php /var/www/html/
 RUN chown -R www-data:www-data /var/www/html && chown -R www-data:www-data /var/lib/php
 WORKDIR /var/www/
 EXPOSE 80
+EXPOSE 9000
 CMD ["/root/scripts/boot.sh"]
